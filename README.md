@@ -4,6 +4,7 @@ A modular Terraform configuration that provisions an Amazon EKS cluster with a c
 
 ## Architecture
 
+```text
 .
 ├── eks.tf                  # EKS cluster, addons, and VPC module call
 ├── iam.tf                  # IAM roles and policy attachments for cluster and node group
@@ -17,6 +18,7 @@ A modular Terraform configuration that provisions an Amazon EKS cluster with a c
         ├── security.tf     # Security group with ingress/egress rules
         ├── variables.tf    # Submodule input variables
         └── output.tf       # Submodule outputs (consumed by the root module)
+```
 
 ## Key Design Decisions
 
