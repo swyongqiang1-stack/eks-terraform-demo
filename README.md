@@ -43,6 +43,13 @@ State 管理:S3 backend (remote state)
 ## 快速开始
 
 ```bash
+# 0. 创建本地 terraform.tfvars(该文件不提交到 git,需自行创建)
+cat > terraform.tfvars << EOF
+vpc_cidr_block = "10.0.0.0/16"
+subnet         = ["10.0.1.0/24", "10.0.2.0/24"]
+gfpassword     = "你自己设定的Grafana密码"
+EOF
+
 # 1. 初始化(会自动读取 state_backend.tf 里的 S3 backend 配置)
 terraform init
 
@@ -94,10 +101,17 @@ kubectl get svc -n monitoring kps-grafana
 - **Node IAM Role**:挂载 `AmazonEKSWorkerNodePolicy`、`AmazonEKS_CNI_Policy`、`AmazonEC2ContainerRegistryReadOnly` 三个最小必需策略
 - **EKS Access Entry**:使用新版 Access Entry API(取代旧版 `aws-auth` ConfigMap 方式)管理集群访问权限,当前绑定的 IAM 用户拥有 `AmazonEKSClusterAdminPolicy`
 
-## 已知待办 / 安全提醒
+## 安全设计
 
-- ⚠️ `helm.tf` 中 Grafana 管理员密码目前是硬编码明文,生产环境应改为通过 `variable` + 敏感值管理(如 AWS Secrets Manager 或 `sensitive = true` 变量),不应提交进版本控制
+- Grafana 管理员密码通过 `var.gfpassword`(`sensitive = true`)传入,不硬编码在代码里。实际取值放在本地 `terraform.tfvars`,该文件已加入 `.gitignore`,不会被提交到版本控制。运行前需自行创建/编辑 `terraform.tfvars` 并设置:
+  ```hcl
+  gfpassword = "你的密码"
+  ```
+
+## 已知待办
+
 - Node Group 当前为单一 `t3.small` 机型、无多可用区显式拆分,后续可扩展为多 AZ、多机型的 Node Group 或 Karpenter 自动扩缩容
+- Grafana 密码目前仍以明文形式存在本地 `.tfvars` 中,生产环境可进一步升级为 AWS Secrets Manager 或 SSM Parameter Store 集中管理
 
 ## 资源清理
 
