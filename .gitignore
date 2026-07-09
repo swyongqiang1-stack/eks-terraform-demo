@@ -1,0 +1,33 @@
+# Terraform 本地状态与备份 - 绝对不能上传
+*.tfstate
+*.tfstate.*
+statebackup/
+.terraform.tfstate.lock.info
+
+# Terraform 工作目录
+.terraform/
+
+# AWS 密钥/凭证文件夹 - 绝对不能上传
+密钥/
+*.pem
+*.key
+credentials
+*_rsa
+*_ed25519
+
+# macOS 系统文件
+.DS_Store
+
+# 编辑器/IDE
+.vscode/
+.idea/
+
+# Terraform crash 日志
+crash.log
+crash.*.log
+
+# override 文件
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
