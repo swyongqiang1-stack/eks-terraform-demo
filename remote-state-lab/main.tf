@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "aws" {
-    region = "ap-southeast-1" # 新加坡区
+    region = "ap-southeast-1" 
 }
 
 
