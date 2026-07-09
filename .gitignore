@@ -3,6 +3,7 @@
 *.tfstate.*
 statebackup/
 .terraform.tfstate.lock.info
+*.tfvars
 
 # Terraform 工作目录
 .terraform/

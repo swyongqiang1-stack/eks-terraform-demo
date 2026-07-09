@@ -6,3 +6,7 @@ variable "subnet" {
     type = list(string)
 }
 
+variable "gfpassword" {
+  type      = string
+  sensitive = true
+}
