@@ -22,9 +22,3 @@ resource "aws_s3_bucket" "stste_bucket" {
   }
 }
 
-
-resource "null_resource" "delay_for_lock_test" {
-  provisioner "local-exec" {
-    command = "sleep 60"
-  }
-}
